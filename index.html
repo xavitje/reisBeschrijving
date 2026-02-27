@@ -167,6 +167,7 @@
         <label class="checkbox-label"><input type="checkbox" id="huurauto"> Huurauto</label>
         <label class="checkbox-label"><input type="checkbox" id="transfers"> Transfers</label>
         <label class="checkbox-label"><input type="checkbox" id="eigenvervoer"> Eigen vervoer</label>
+        <label class="checkbox-label"><input type="checkbox" id="ferries"> Ferries</label>
         <label class="checkbox-label"><input type="checkbox" id="activiteiten" onchange="toggleActiviteiten()"> Activiteiten</label>
     </div>
 
@@ -212,6 +213,7 @@ function generateHTML() {
     const huurauto = document.getElementById('huurauto').checked;
     const transfers = document.getElementById('transfers').checked;
     const eigenvervoer = document.getElementById('eigenvervoer').checked;
+    const ferries = document.getElementById('ferries').checked;
     const activiteitenCheck = document.getElementById('activiteiten').checked;
 
     let html = '<b><h4>Inbegrepen in het reisschema</h4>\nAccommodaties</b>\n';
@@ -237,6 +239,7 @@ function generateHTML() {
         html += '\n';
     }
     if(eigenvervoer) html += '<b>Eigen vervoer</b>\n';
+    if(ferries) html += '<b>Ferries</b>\n';
 
     document.getElementById('output').innerText = html.trim();
 }
@@ -244,4 +247,3 @@ function generateHTML() {
 
 </body>
 </html>
-
