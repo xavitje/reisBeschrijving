@@ -184,66 +184,74 @@
     <h3>Output Code</h3>
     <div id="output-container">
         <div id="output">De gegenereerde code verschijnt hier...</div>
+        <p>
+            <span id="char">0</span> Characters
+        </p>
     </div>
 </div>
 
 <script>
-function toggleActiviteiten() {
-    const sectie = document.getElementById('activiteiten-sectie');
-    sectie.style.display = document.getElementById('activiteiten').checked ? 'block' : 'none';
-}
 
-function copyToClipboard() {
-    const output = document.getElementById('output').innerText;
-    if (output === "De gegenereerde code verschijnt hier...") return;
 
-    navigator.clipboard.writeText(output).then(() => {
-        const btn = document.querySelector('.secondary');
-        const originalText = btn.innerText;
-        btn.innerText = "Gekopieerd! ✓";
-        setTimeout(() => btn.innerText = originalText, 2000);
-    });
-}
+    function toggleActiviteiten() {
+        const sectie = document.getElementById('activiteiten-sectie');
+        sectie.style.display = document.getElementById('activiteiten').checked ? 'block' : 'none';
+    }
 
-function generateHTML() {
-    const hotels = document.getElementById('hotels').value.split('\n');
-    const activiteitenLijst = document.getElementById('activiteiten_lijst').value.split('\n');
+    function copyToClipboard() {
+        const output = document.getElementById('output').innerText;
+        if (output === "De gegenereerde code verschijnt hier...") return;
 
-    const vluchten = document.getElementById('vluchten').checked;
-    const huurauto = document.getElementById('huurauto').checked;
-    const transfers = document.getElementById('transfers').checked;
-    const eigenvervoer = document.getElementById('eigenvervoer').checked;
-    const ferries = document.getElementById('ferries').checked;
-    const activiteitenCheck = document.getElementById('activiteiten').checked;
+        navigator.clipboard.writeText(output).then(() => {
+            const btn = document.querySelector('.secondary');
+            const originalText = btn.innerText;
+            btn.innerText = "Gekopieerd! ✓";
+            setTimeout(() => btn.innerText = originalText, 2000);
+        });
+    }
 
-    let html = '<b><h4>Inbegrepen in het reisschema</h4>\nAccommodaties</b>\n';
+    function generateHTML() {
+        const hotels = document.getElementById('hotels').value.split('\n');
+        const activiteitenLijst = document.getElementById('activiteiten_lijst').value.split('\n');
 
-    hotels.forEach(line => {
-        if(line.trim() !== "") {
-            html += `- ${line.trim()}\n`;
-        }
-    });
+        const vluchten = document.getElementById('vluchten').checked;
+        const huurauto = document.getElementById('huurauto').checked;
+        const transfers = document.getElementById('transfers').checked;
+        const eigenvervoer = document.getElementById('eigenvervoer').checked;
+        const ferries = document.getElementById('ferries').checked;
+        const activiteitenCheck = document.getElementById('activiteiten').checked;
 
-    html += '\n';
+        let html = '<b><h4>Inbegrepen in het reisschema</h4>\nAccommodaties</b>\n';
 
-    if(vluchten) html += '<b>Vluchten</b>\n';
-    if(huurauto) html += '<b>Huurauto</b>\n';
-    if(transfers) html += '<b>Transfers</b>\n';
-    if(activiteitenCheck && document.getElementById('activiteiten_lijst').value.trim() !== "") {
-        html += '<b>Activiteiten</b>\n';
-        activiteitenLijst.forEach(line => {
+        hotels.forEach(line => {
             if(line.trim() !== "") {
                 html += `- ${line.trim()}\n`;
             }
         });
+
         html += '\n';
+
+        if(vluchten) html += '<b>Vluchten</b>\n';
+        if(huurauto) html += '<b>Huurauto</b>\n';
+        if(transfers) html += '<b>Transfers</b>\n';
+        if(activiteitenCheck && document.getElementById('activiteiten_lijst').value.trim() !== "") {
+            html += '<b>Activiteiten</b>\n';
+            activiteitenLijst.forEach(line => {
+                if(line.trim() !== "") {
+                    html += `- ${line.trim()}\n`;
+                }
+            });
+            html += '\n';
+        }
+        if(eigenvervoer) html += '<b>Eigen vervoer</b>\n';
+        if(ferries) html += '<b>Ferries</b>\n';
+
+        document.getElementById('output').innerText = html.trim();
+        let char = document.getElementById("char");
+        let content = html;
+        char.textContent = content.length;
     }
-    if(eigenvervoer) html += '<b>Eigen vervoer</b>\n';
-    if(ferries) html += '<b>Ferries</b>\n';
-
-    document.getElementById('output').innerText = html.trim();
-}
 </script>
-
 </body>
 </html>
+
